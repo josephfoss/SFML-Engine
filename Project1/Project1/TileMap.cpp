@@ -1,0 +1,236 @@
+#include "stdafx.h"
+#include "TileMap.h"
+
+
+TileMap::TileMap(float gridSize, unsigned width, unsigned height, unsigned layers, std::string texture_file)
+{
+	gridSizeF = gridSize;
+	gridSizeU = static_cast<unsigned>(gridSizeF);
+	maxSize.x = width;
+	maxSize.y = height;
+	this->layers = layers;
+	this->texture_file = texture_file;
+
+	initMap(maxSize.x, maxSize.y, layers);
+
+	tileSheet.loadFromFile(texture_file);
+
+	collisionBox.setSize(sf::Vector2f(gridSize, gridSize));
+	collisionBox.setFillColor(sf::Color(255, 0, 0, 50));
+}
+
+
+void TileMap::clear()
+{
+	for (size_t x = 0; x < maxSize.x; x++)
+	{
+		for (size_t y = 0; y < maxSize.y; y++)
+		{
+			for (size_t z = 0; z < layers; z++)
+			{
+				delete map[x][y][z];
+			}
+			map[x][y].clear();
+		}
+		map[x].clear();
+	}
+
+	//clear vector
+	map.clear();
+}
+
+void TileMap::initMap(unsigned width, unsigned height, unsigned layers)
+{
+	//x = a vector of vector of tiles
+	//y = a vector of tiles
+	//z = a tile
+
+	map.reserve(maxSize.x);
+	for (size_t x = 0; x < maxSize.x; x++)
+	{
+		map.push_back(std::vector<std::vector<Tile*>>());
+
+		for (size_t y = 0; y < maxSize.y; y++)
+		{
+			map[x].reserve(maxSize.y);
+			map[x].push_back(std::vector<Tile*>());
+
+			for (size_t z = 0; z < layers; z++)
+			{
+				map[x][y].reserve(layers);
+				map[x][y].push_back(nullptr);
+			}
+		}
+	}
+}
+
+TileMap::~TileMap()
+{
+	clear();
+}
+
+sf::Texture* TileMap::getTileSheet()
+{
+	return &tileSheet;
+}
+
+unsigned TileMap::getNumLayers()
+{
+	return layers;
+}
+
+void TileMap::addTile(const unsigned x, const unsigned y, const unsigned z, const sf::IntRect& rect, bool collision, short type)
+{
+	if (x < maxSize.x && x >= 0 && y < maxSize.y && y >= 0 && z < layers && z >= 0)
+	{
+		if (map[x][y][z] == nullptr)
+		{
+			map[x][y][z] = new Tile(x, y, gridSizeF, tileSheet, rect, collision, type);
+		}
+	}
+}
+
+void TileMap::removeTile(const unsigned x, const unsigned y, const unsigned z)
+{
+	if (x < maxSize.x && x >= 0 && y < maxSize.y && y >= 0 && z < layers && z >= 0)
+	{
+		if (map[x][y][z] != nullptr)
+		{
+			delete map[x][y][z];
+			map[x][y][z] = nullptr;
+		}
+	}
+}
+
+void TileMap::saveToFile(const std::string path)
+{
+	/*
+		Format:
+		 - Size (x, y)
+		 - Grid Size
+		 - Layers
+		 - Texture File Path
+		 - Tile Grid Position (x, y)
+		 - Tile TextureRect (x, y)
+		 - Tile Type
+	*/
+
+	int counter = 0;
+	std::ofstream fout;
+
+	fout.open(path);
+
+	if (fout.is_open())
+	{
+		std::cout << "Tile map saving...\n";
+
+		fout << maxSize.x << " " << maxSize.y << "\n"
+			 << gridSizeU << "\n"
+			 << layers << "\n"
+			 << texture_file << "\n";
+
+		for (size_t x = 0; x < maxSize.x; x++)
+		{
+			for (size_t y = 0; y < maxSize.y; y++)
+			{
+				for (size_t z = 0; z < layers; z++)
+				{
+					if (map[x][y][z])
+					{
+						fout << x << " " << y << " " << z << " " << map[x][y][z]->getAsString() << " \n";
+						counter++;
+					}
+				}
+			}
+		}
+	}
+	
+	std::cout << "Finished save. (" << counter << ") Tiles saved.\n";
+
+	fout.close();
+}
+
+void TileMap::loadFromFile(const std::string path)
+{
+	int counter = 0;
+	std::ifstream fin;
+
+	fin.open(path);
+
+	if (fin.is_open())
+	{
+		std::cout << "File path open. Loading tiles.\n";
+
+		unsigned x = 0, y = 0, z = 0;
+		unsigned trX = 0, trY = 0;
+		bool collision = false;
+		short type = 0;
+
+		//take in primary variables.
+		fin >> maxSize.x >> maxSize.y >> gridSizeF >> layers >> texture_file;
+		gridSizeU = static_cast<unsigned>(gridSizeF);
+
+		//clear the grid
+		clear();
+		
+		//resize the map
+		initMap(maxSize.x, maxSize.y, layers);
+
+		//load new texture file
+		tileSheet.loadFromFile(texture_file);
+
+		//load tiles
+		while(fin >> x >> y >> z >> trX >> trY >> collision >> type)
+		{
+			counter++;
+			map[x][y][z] = new Tile(x, y, gridSizeF, tileSheet, sf::IntRect(trX, trY, 120, 120), collision, type);
+		}
+	}
+
+	std::cout << "Finished load. (" << counter << ") Tiles loaded.\n";
+
+	fin.close();
+}
+
+void TileMap::updateCollision(Entity* entity)
+{
+
+}
+
+
+void TileMap::update()
+{
+}
+
+void TileMap::render(sf::RenderTarget& target, unsigned layer, Entity* entity)
+{
+	//for (auto& x : map)
+	//{
+	//	for (auto& y : x)
+	//	{
+	//		for (auto* z : y)
+	//		{
+	//			if (z)
+	//			{
+	//				z->render(target);
+	//			}
+	//		}
+	//	}
+	//}
+
+	for (size_t x = 0; x < maxSize.x; x++)
+	{
+		for (size_t y = 0; y < maxSize.y; y++)
+		{
+			if (map[x][y][layer])
+			{
+				map[x][y][layer]->render(target);
+				if (map[x][y][layer]->getCollision())
+				{
+					collisionBox.setPosition(map[x][y][layer]->getPosition());
+					target.draw(collisionBox);
+				}
+			}
+		}
+	}
+}

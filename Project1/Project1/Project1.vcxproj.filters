@@ -1,0 +1,150 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="States">
+      <UniqueIdentifier>{fe117645-98a0-4135-bc5a-7aef63ac4efb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Entities">
+      <UniqueIdentifier>{9303a96b-bc12-4c67-8ccf-96e3c3ca3567}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Entities\Components">
+      <UniqueIdentifier>{1de3fe47-e6c6-44ce-978e-54ee56e4fda5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Tile">
+      <UniqueIdentifier>{eeba3c24-64b1-44d1-ac11-ab2b8fec7676}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GUI">
+      <UniqueIdentifier>{17e03c7a-d241-4ed1-8adc-07720e8bd01f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Map">
+      <UniqueIdentifier>{d3e6ad7a-24b2-4c37-9238-5c1c9fb452dc}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Game.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GameState.cpp">
+      <Filter>States</Filter>
+    </ClCompile>
+    <ClCompile Include="State.cpp">
+      <Filter>States</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity.cpp">
+      <Filter>Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="MainMenuState.cpp">
+      <Filter>States</Filter>
+    </ClCompile>
+    <ClCompile Include="MovementComponent.cpp">
+      <Filter>Entities\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="AnimationComponent.cpp">
+      <Filter>Entities\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="HitboxComponent.cpp">
+      <Filter>Entities\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Tile.cpp">
+      <Filter>Tile</Filter>
+    </ClCompile>
+    <ClCompile Include="TileMap.cpp">
+      <Filter>Map</Filter>
+    </ClCompile>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>Header Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PauseMenu.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="EditorState.cpp">
+      <Filter>States</Filter>
+    </ClCompile>
+    <ClCompile Include="Animation.cpp">
+      <Filter>Entities\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Gui.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Prop.cpp">
+      <Filter>Tile</Filter>
+    </ClCompile>
+    <ClCompile Include="PropMap.cpp">
+      <Filter>Map</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Game.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GameState.h">
+      <Filter>States</Filter>
+    </ClInclude>
+    <ClInclude Include="State.h">
+      <Filter>States</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity.h">
+      <Filter>Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="MainMenuState.h">
+      <Filter>States</Filter>
+    </ClInclude>
+    <ClInclude Include="MovementComponent.h">
+      <Filter>Entities\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimationComponent.h">
+      <Filter>Entities\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="HitboxComponent.h">
+      <Filter>Entities\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Tile.h">
+      <Filter>Tile</Filter>
+    </ClInclude>
+    <ClInclude Include="TileMap.h">
+      <Filter>Map</Filter>
+    </ClInclude>
+    <ClInclude Include="stdafx.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="EditorState.h">
+      <Filter>States</Filter>
+    </ClInclude>
+    <ClInclude Include="PauseMenu.h">
+      <Filter>GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Animation.h">
+      <Filter>Entities\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Gui.h">
+      <Filter>GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Prop.h">
+      <Filter>Tile</Filter>
+    </ClInclude>
+    <ClInclude Include="PropMap.h">
+      <Filter>Map</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

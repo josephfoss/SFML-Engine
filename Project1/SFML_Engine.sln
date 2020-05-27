@@ -1,0 +1,93 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28803.156
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SFML_Engine", "Project1\Project1.vcxproj", "{84566AD9-70CF-41E7-9252-04EF5E8390D2}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Assets", "Assets", "{C43A175D-A847-4E9F-956A-DFF4950D29C7}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Textures", "Textures", "{2914F654-1DEA-4159-A543-D6E7DC0F76BC}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Properties", "Properties", "{B59696E9-9479-4CC4-84FD-2383CDFB6087}"
+	ProjectSection(SolutionItems) = preProject
+		Project1\Properties\keybindings.ini = Project1\Properties\keybindings.ini
+		Project1\Properties\window.ini = Project1\Properties\window.ini
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "States", "States", "{8B20CDED-9561-4899-A7C1-185AD1E86DF0}"
+	ProjectSection(SolutionItems) = preProject
+		Project1\Properties\States\editorstate_keys.ini = Project1\Properties\States\editorstate_keys.ini
+		Project1\Properties\States\gamestate_keys.ini = Project1\Properties\States\gamestate_keys.ini
+		Project1\Properties\States\mainmenustate_keys.ini = Project1\Properties\States\mainmenustate_keys.ini
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Fonts", "Fonts", "{33FF2EDF-780B-4F2E-BDC2-DC068A99C027}"
+	ProjectSection(SolutionItems) = preProject
+		Project1\Fonts\AGoblinAppears-o2aV.ttf = Project1\Fonts\AGoblinAppears-o2aV.ttf
+		Project1\Fonts\AncientModernTales-a7Po.ttf = Project1\Fonts\AncientModernTales-a7Po.ttf
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Audio", "Audio", "{91E28117-F142-4018-9771-5A9E161C5D15}"
+	ProjectSection(SolutionItems) = preProject
+		Project1\Assets\Audio\mm_amb.wav = Project1\Assets\Audio\mm_amb.wav
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UI", "UI", "{D5665281-21F4-45A4-A8BA-0E32AD7ED4B6}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Entities", "Entities", "{BFF27AEA-6BCD-4623-AF30-5BFEB1CE3D85}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Player", "Player", "{3478B5D9-1704-4836-B9EC-F72963130275}"
+	ProjectSection(SolutionItems) = preProject
+		Project1\Assets\Textures\Entities\Player\temp_player.png = Project1\Assets\Textures\Entities\Player\temp_player.png
+		Project1\Assets\Textures\Entities\Player\test_player_idle_62.png = Project1\Assets\Textures\Entities\Player\test_player_idle_62.png
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MainMenu", "MainMenu", "{1B481412-0278-4B14-893E-EC5924D3B092}"
+	ProjectSection(SolutionItems) = preProject
+		Project1\Assets\Textures\UI\mm_bg.png = Project1\Assets\Textures\UI\mm_bg.png
+		Project1\Assets\Textures\UI\mm_button.png = Project1\Assets\Textures\UI\mm_button.png
+		Project1\Assets\Textures\UI\mm_settingsbutton.png = Project1\Assets\Textures\UI\mm_settingsbutton.png
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tiles", "Tiles", "{F74A6DA2-3968-4FC4-A6E2-99E14381ACD9}"
+	ProjectSection(SolutionItems) = preProject
+		Project1\Assets\Textures\Tiles\dungeonPropSheet.png = Project1\Assets\Textures\Tiles\dungeonPropSheet.png
+		Project1\Assets\Textures\Tiles\dungeonTileSheet.png = Project1\Assets\Textures\Tiles\dungeonTileSheet.png
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{84566AD9-70CF-41E7-9252-04EF5E8390D2}.Debug|x64.ActiveCfg = Debug|x64
+		{84566AD9-70CF-41E7-9252-04EF5E8390D2}.Debug|x64.Build.0 = Debug|x64
+		{84566AD9-70CF-41E7-9252-04EF5E8390D2}.Debug|x86.ActiveCfg = Debug|Win32
+		{84566AD9-70CF-41E7-9252-04EF5E8390D2}.Debug|x86.Build.0 = Debug|Win32
+		{84566AD9-70CF-41E7-9252-04EF5E8390D2}.Release|x64.ActiveCfg = Release|x64
+		{84566AD9-70CF-41E7-9252-04EF5E8390D2}.Release|x64.Build.0 = Release|x64
+		{84566AD9-70CF-41E7-9252-04EF5E8390D2}.Release|x86.ActiveCfg = Release|Win32
+		{84566AD9-70CF-41E7-9252-04EF5E8390D2}.Release|x86.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{2914F654-1DEA-4159-A543-D6E7DC0F76BC} = {C43A175D-A847-4E9F-956A-DFF4950D29C7}
+		{8B20CDED-9561-4899-A7C1-185AD1E86DF0} = {B59696E9-9479-4CC4-84FD-2383CDFB6087}
+		{33FF2EDF-780B-4F2E-BDC2-DC068A99C027} = {C43A175D-A847-4E9F-956A-DFF4950D29C7}
+		{91E28117-F142-4018-9771-5A9E161C5D15} = {C43A175D-A847-4E9F-956A-DFF4950D29C7}
+		{D5665281-21F4-45A4-A8BA-0E32AD7ED4B6} = {2914F654-1DEA-4159-A543-D6E7DC0F76BC}
+		{BFF27AEA-6BCD-4623-AF30-5BFEB1CE3D85} = {2914F654-1DEA-4159-A543-D6E7DC0F76BC}
+		{3478B5D9-1704-4836-B9EC-F72963130275} = {BFF27AEA-6BCD-4623-AF30-5BFEB1CE3D85}
+		{1B481412-0278-4B14-893E-EC5924D3B092} = {D5665281-21F4-45A4-A8BA-0E32AD7ED4B6}
+		{F74A6DA2-3968-4FC4-A6E2-99E14381ACD9} = {2914F654-1DEA-4159-A543-D6E7DC0F76BC}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {2D25568F-6D0B-4C18-8EA9-5D19CBDAB692}
+	EndGlobalSection
+EndGlobal
