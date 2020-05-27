@@ -295,19 +295,19 @@ void EditorState::updateEditorInput(const float& dt)
 	}
 	if (sf::Keyboard::isKeyPressed(stateKeybinds.at("MOVE_UP")))
 	{
-		camera.move(0.f, -std::floor(cameraSpeed * dt));
+		camera.move(0.f, -(cameraSpeed * dt));
 	}
 	if (sf::Keyboard::isKeyPressed(stateKeybinds.at("MOVE_DOWN")))
 	{
-		camera.move(0.f, std::floor(cameraSpeed * dt));
+		camera.move(0.f, (cameraSpeed * dt));
 	}
 	if (sf::Keyboard::isKeyPressed(stateKeybinds.at("MOVE_LEFT")))
 	{
-		camera.move(-std::floor(cameraSpeed * dt), 0.f);
+		camera.move(-(cameraSpeed * dt), 0.f);
 	}
 	if (sf::Keyboard::isKeyPressed(stateKeybinds.at("MOVE_RIGHT")))
 	{
-		camera.move(std::floor(cameraSpeed * dt), 0.f);
+		camera.move((cameraSpeed * dt), 0.f);
 	}
 	if (sf::Keyboard::isKeyPressed(stateKeybinds.at("ZOOM_OUT")) && getKeyTime())
 	{

@@ -109,12 +109,15 @@ void GameState::initPlayers()
 {
 	player = new Player(playerSpawn.x, playerSpawn.y, textures["PLAYER"]);
 	player->setScale(1.2, 1.2);
+	
+	//player facing forward at spawn
+	player->move(0, -0.1, 1);
 }
 
 void GameState::updateView()
 {
 	// using std::floor on the position values to remove visual artifacts caused by moving the camera with float values.
-	camera.setCenter(std::floor(player->getPosition().x + 63), std::floor(player->getPosition().y + 117));
+	camera.setCenter((player->getPosition().x + 63), (player->getPosition().y + 117));
 }
 
 void GameState::updateButtons(const sf::Vector2f& mousePosView)
@@ -247,20 +250,13 @@ void GameState::render(sf::RenderTarget* target)
 	renderTexture.clear();
 	renderTexture.setView(camera);
 
-	// three layers render below the player
-	for (int i = 0; i < 3; i++)
-	{
-		tileMap->render(renderTexture, i);
-	}
-
+	tileMap->render(renderTexture, 0);
+	tileMap->render(renderTexture, 1);
+	tileMap->render(renderTexture, 2);
 	propMap->render(renderTexture, false);
 	player->render(renderTexture);
-
-	// two layers render above the player
-	for (int i = 3; i < 4; i++)
-	{
-		tileMap->render(renderTexture, i);
-	}
+	tileMap->render(renderTexture, 3);
+	tileMap->render(renderTexture, 4);
 
 	renderTexture.setView(renderTexture.getDefaultView());
 
