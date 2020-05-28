@@ -8,6 +8,8 @@ private:
 	sf::Texture propSheet;
 	sf::Vector2u maxSize;
 	
+	bool doneLoading;
+
 	std::string texture_file;
 
 	void clear();
@@ -18,6 +20,8 @@ public:
 	sf::Texture* getPropSheet();
 	
 	std::vector<Prop*> getMap();
+
+	bool getDoneLoading();
 
 	void addProp(const unsigned x, const unsigned y, const sf::IntRect& rect, bool clickable, int id, sf::Font* font, bool breakable);
 	void removeProp(const unsigned x, const unsigned y);

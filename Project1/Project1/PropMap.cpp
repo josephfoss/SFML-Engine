@@ -25,6 +25,11 @@ std::vector<Prop*> PropMap::getMap()
 	return map;
 }
 
+bool PropMap::getDoneLoading()
+{
+	return doneLoading;
+}
+
 void PropMap::clear()
 {
 	for (auto& i : map)
@@ -109,6 +114,7 @@ void PropMap::saveToFile(const std::string path)
 
 void PropMap::loadFromFile(const std::string path, sf::Font* font)
 {
+	doneLoading = false;
 	int counter = 0;
 	std::ifstream fin;
 
@@ -144,15 +150,19 @@ void PropMap::loadFromFile(const std::string path, sf::Font* font)
 	std::cout << "Finished load. (" << counter << ") Props loaded.\n";
 
 	fin.close();
+	doneLoading = true;
 }
 
 void PropMap::update(const sf::Vector2f& mousePosView)
 {
-	for (auto& i : map)
+	if (doneLoading)
 	{
-		if (i)
+		for (auto& i : map)
 		{
-			i->update(mousePosView);
+			if (i)
+			{
+				i->update(mousePosView);
+			}
 		}
 	}
 }

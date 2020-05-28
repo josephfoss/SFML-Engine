@@ -95,11 +95,11 @@ const std::string Prop::getAsString() const
 
 void Prop::update(const sf::Vector2f& mousePosView)
 {
-	if (button)
+	if (clickable)
 	{
 		button->update(sf::Vector2i(0,0), mousePosView, true);
 	}
-	if (hitbox)
+	if (breakable)
 	{
 		hitbox->update();
 	}

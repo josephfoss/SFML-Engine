@@ -42,12 +42,13 @@ void GameState::loadNewMap(std::string filepath)
 		}
 	}
 
+	//teleports the player to the new spawn location
 	player->setPosition(playerSpawn.x, playerSpawn.y);
 }
 
 void GameState::initKeybinds()
 {
-
+	//establishes the state keybinds using a ini file
 	std::ifstream fin("Properties/States/gamestate_keys.ini");
 
 	if (fin.is_open())
@@ -79,9 +80,12 @@ void GameState::initGUI()
 
 void GameState::initTileMap()
 {
+	//initializes the tilemap and propmap, and also sets the player spawn point for the new map.
+
 	tileMap = new TileMap(state_data->gridSize, 50, 50, 5, "Assets/Textures/Tiles/dungeonTileSheet.png");
 	propMap = new PropMap(6000, 6000, "Assets/Textures/Tiles/dungeonPropSheet.png");
 
+	//loads the shop map by default
 	tileMap->loadFromFile("Data/tilemaps/shop.tm");
 	propMap->loadFromFile("Data/tilemaps/shop.pm", &fontMain);
 
@@ -99,8 +103,8 @@ void GameState::initTileMap()
 
 void GameState::initDeferredRender()
 {
+	//initializes the render texture.
 	renderTexture.create(1500, 900);
-
 	renderSprite.setTexture(renderTexture.getTexture());
 	renderSprite.setTextureRect(sf::IntRect(0, 0, 1500, 900));
 }
@@ -139,10 +143,11 @@ void GameState::updateButtons(const sf::Vector2f& mousePosView)
 
 	for (auto& i : propMap->getMap())
 	{
-		if (i)
+		if (i != nullptr)
 		{
 			if (i->isClickable())
 			{
+				//update buttons
 				i->update(mousePosView);
 
 				//check if the button is pressed
@@ -156,12 +161,16 @@ void GameState::updateButtons(const sf::Vector2f& mousePosView)
 						{
 							loadNewMap("Data/tilemaps/dungeon1");
 							player->stats.currentHealth = player->stats.maxHealth;
+							//after loading a new map the for loop has to break to stop it from trying to update a nullptr button.
+							break;
 						}
 						// button id 7 loads the shop
 						else if (i->getID() == 3)
 						{
 							loadNewMap("Data/tilemaps/shop");
 							player->stats.currentHealth = player->stats.maxHealth;
+							//after loading a new map the for loop has to break to stop it from trying to update a nullptr button.
+							break;
 						}
 					}
 				}
@@ -172,6 +181,7 @@ void GameState::updateButtons(const sf::Vector2f& mousePosView)
 
 void GameState::updatePauseMenuButtons()
 {
+	//updates exit button in pause menu
 	if (pausemenu->getButtons()["EXIT"]->isPressed())
 	{
 		endState();
@@ -180,6 +190,7 @@ void GameState::updatePauseMenuButtons()
 
 void GameState::updateInput(const float& dt)
 {
+	//checks for a pause
 	if (sf::Keyboard::isKeyPressed(stateKeybinds.at("CLOSE")) && getKeyTime())
 	{
 		if (!paused)
@@ -195,6 +206,7 @@ void GameState::updateInput(const float& dt)
 
 void GameState::updatePlayerInput(const float& dt)
 {
+	//player movement
 	if (!player->attacking)
 	{
 		if (sf::Keyboard::isKeyPressed(stateKeybinds.at("MOVE_LEFT"))) // left
@@ -215,6 +227,7 @@ void GameState::updatePlayerInput(const float& dt)
 		}
 	}
 
+	//updates the players face direction
 	if (player->getVelocity() != sf::Vector2f(0,0))
 	{
 		player->updateAngleDirection();
@@ -223,6 +236,7 @@ void GameState::updatePlayerInput(const float& dt)
 
 void GameState::update(const float& dt)
 {
+	//general update calls
 	updateMousePositions(&camera);
 	updateKeyTime(dt);
 	updateInput(dt);
@@ -235,7 +249,7 @@ void GameState::update(const float& dt)
 		updateView();
 		hud->update(player->getStats());
 	}
-	else //pause menu
+	else //paused updates
 	{
 		pausemenu->update(mousePosWindow);
 		updatePauseMenuButtons();
@@ -244,20 +258,33 @@ void GameState::update(const float& dt)
 
 void GameState::render(sf::RenderTarget* target)
 {
+	//general render calls
 	if (!target)
 		target = window;
 
+	//clear the rendertexture
 	renderTexture.clear();
+	//set the view to the player camera.
 	renderTexture.setView(camera);
 
-	tileMap->render(renderTexture, 0);
-	tileMap->render(renderTexture, 1);
-	tileMap->render(renderTexture, 2);
+
+	//renders first three layers of tilemap
+	for (int i = 0; i < 3; i++)
+	{
+		tileMap->render(renderTexture, i);
+	}
+
+	//renders propmap and the player
 	propMap->render(renderTexture, false);
 	player->render(renderTexture);
-	tileMap->render(renderTexture, 3);
-	tileMap->render(renderTexture, 4);
 
+	//renders top two layers of the tilemap
+	for (int i = 3; i < 5; i++)
+	{
+		tileMap->render(renderTexture, i);
+	}
+
+	//set the view to the default view, this is useful for rendering GUI
 	renderTexture.setView(renderTexture.getDefaultView());
 
 	if (paused) // renders pause menu
@@ -269,6 +296,7 @@ void GameState::render(sf::RenderTarget* target)
 		hud->render(renderTexture);
 	}
 
+	//displaying the render texture
 	renderTexture.display();
 	renderSprite.setTexture(renderTexture.getTexture());
 	target->draw(renderSprite);
