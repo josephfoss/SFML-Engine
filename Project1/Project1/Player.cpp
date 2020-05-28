@@ -3,15 +3,14 @@
 
 Player::Player(float x, float y, sf::Texture& spriteSheet)
 {
-	createHitboxComponent(sprite, 50.f, 30.f, 33 * scaleX, 80 * scaleY);
+	createHitboxComponent(sprite, 40.f, 60.f, 33, 60);
 	createMovementComponent(250.f, 90.f, 50.f);
 	createAnimationComponent(spriteSheet);
 
 	initializeVariables();
 	initializeAnimations();
 
-	setOrigin(sprite.getGlobalBounds().width / 2.f, sprite.getGlobalBounds().height / 2.f);
-	std::cout << sprite.getOrigin().x << " " << sprite.getOrigin().y << std::endl;
+	//setOrigin(sprite.getGlobalBounds().width / 2.f, sprite.getGlobalBounds().height / 2.f);
 	setPosition(x, y);
 
 	loadPlayerStats("Data/player/save.dat");
@@ -121,7 +120,7 @@ void Player::updateAngleDirection()
 	angleDirection = (atan2f(movementComponent->getVelocity().y, movementComponent->getVelocity().x) * 180 / 3.14159265359) / 45;
 }
 
-sf::Vector2f Player::getPosition()
+sf::Vector2f Player::getPos()
 {
 	return sf::Vector2f(sprite.getPosition().x, sprite.getPosition().y);
 }
@@ -190,12 +189,16 @@ void Player::updateAnimations(const float& dt)
 	}
 }
 
+void Player::render(sf::RenderTarget& target)
+{
+	target.draw(sprite);
+	hitboxComponent->render(target);
+}
+
 void Player::update(const float& dt)
 {
-	Entity::update(dt);
-	
+	movementComponent->update(dt);
 	updateInput();
 	updateAnimations(dt);
-
 	hitboxComponent->update();
 }

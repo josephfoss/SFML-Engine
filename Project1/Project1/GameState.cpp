@@ -121,7 +121,7 @@ void GameState::initPlayers()
 void GameState::updateView()
 {
 	// using std::floor on the position values to remove visual artifacts caused by moving the camera with float values.
-	camera.setCenter((player->getPosition().x + 63), (player->getPosition().y + 117));
+	camera.setCenter((player->getPos().x + 63), (player->getPos().y + 117));
 }
 
 void GameState::updateButtons(const sf::Vector2f& mousePosView)
@@ -154,7 +154,7 @@ void GameState::updateButtons(const sf::Vector2f& mousePosView)
 				if ((i->getButton()->isPressed() && getKeyTime()))
 				{
 					// check if the player is within a certain distance from the button using pythagorean theorum
-					if (sqrt(pow((i->getPosition().x - player->getPosition().x), 2) + pow((i->getPosition().y - player->getPosition().y), 2)) < 125)
+					if (sqrt(pow((i->getPosition().x - player->getPos().x), 2) + pow((i->getPosition().y - player->getPos().y), 2)) < 125)
 					{
 						// button id 6 loads dungeon 1
 						if (i->getID() == 2)
@@ -234,6 +234,12 @@ void GameState::updatePlayerInput(const float& dt)
 	}
 }
 
+void GameState::updateTileMap(const float& dt)
+{
+	tileMap->update();
+	tileMap->updateCollision(player, dt);
+}
+
 void GameState::update(const float& dt)
 {
 	//general update calls
@@ -245,9 +251,10 @@ void GameState::update(const float& dt)
 	{
 		updatePlayerInput(dt);
 		updateButtons(mousePosView);
-		player->update(dt);
 		updateView();
 		hud->update(player->getStats());
+		updateTileMap(dt);
+		player->update(dt);
 	}
 	else //paused updates
 	{
@@ -271,7 +278,7 @@ void GameState::render(sf::RenderTarget* target)
 	//renders first three layers of tilemap
 	for (int i = 0; i < 3; i++)
 	{
-		tileMap->render(renderTexture, i);
+		tileMap->render(renderTexture, i, player);
 	}
 
 	//renders propmap and the player
@@ -281,7 +288,7 @@ void GameState::render(sf::RenderTarget* target)
 	//renders top two layers of the tilemap
 	for (int i = 3; i < 5; i++)
 	{
-		tileMap->render(renderTexture, i);
+		tileMap->render(renderTexture, i, player);
 	}
 
 	//set the view to the default view, this is useful for rendering GUI

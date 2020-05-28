@@ -97,8 +97,11 @@ void Game::update()
 
 	if (!states.empty())
 	{
-		//calls the update function of the top game state in the stack.
-		states.top()->update(deltaTime);
+		//calls the update function of the top game state in the stack if the window has focus.
+		if (window->hasFocus())
+		{
+			states.top()->update(deltaTime);
+		}
 
 		//if the game state returns a quit, the game state gets deleted from the std::stack.
 		if (states.top()->getQuit())
