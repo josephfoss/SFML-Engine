@@ -12,6 +12,7 @@ private:
 	TileMap* tileMap;
 	PropMap* propMap;
 	PauseMenu* pausemenu;
+	gui::ShopMenu* shop;
 	gui::HUD* hud;
 	sf::View camera;
 	sf::RenderTexture renderTexture;

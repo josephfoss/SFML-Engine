@@ -22,6 +22,8 @@ GameState::~GameState()
 	delete player;
 	delete pausemenu;
 	delete tileMap;
+	delete shop;
+	delete hud;
 }
 
 void GameState::loadNewMap(std::string filepath)
@@ -76,6 +78,7 @@ void GameState::initGUI()
 {
 	pausemenu = new PauseMenu(*window, fontMain, textures);
 	hud = new gui::HUD(&fontMain);
+	shop = new gui::ShopMenu(&fontMain);
 }
 
 void GameState::initTileMap()
@@ -177,6 +180,31 @@ void GameState::updateButtons(const sf::Vector2f& mousePosView)
 			}
 		}
 	}
+
+	if (shop->getButtons()["b_strength"]->isPressed() && getKeyTime())
+	{
+		if (player->stats.currency >= (player->stats.strength * 3) * 100)
+		{
+			player->stats.currency -= (player->stats.strength * 3) * 100;
+			player->stats.strength++;
+		}
+	}
+	if (shop->getButtons()["b_defense"]->isPressed() && getKeyTime())
+	{
+		if (player->stats.currency >= (player->stats.defense * 3) * 100)
+		{
+			player->stats.currency -= (player->stats.defense * 3) * 100;
+			player->stats.defense++;
+		}
+	}
+	if (shop->getButtons()["b_vitality"]->isPressed() && getKeyTime())
+	{
+		if (player->stats.currency >= player->stats.maxHealth * 3)
+		{
+			player->stats.currency -= (player->stats.maxHealth * 3);
+			player->stats.maxHealth += 20;
+		}
+	}
 }
 
 void GameState::updatePauseMenuButtons()
@@ -255,6 +283,7 @@ void GameState::update(const float& dt)
 		hud->update(player->getStats());
 		updateTileMap(dt);
 		player->update(dt);
+		shop->update(dt, mousePosWindow, player->getStats());
 	}
 	else //paused updates
 	{
@@ -301,6 +330,7 @@ void GameState::render(sf::RenderTarget* target)
 	else
 	{
 		hud->render(renderTexture);
+		shop->render(renderTexture);
 	}
 
 	//displaying the render texture
