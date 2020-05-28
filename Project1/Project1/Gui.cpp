@@ -438,7 +438,7 @@ void gui::TextureSelector::render(sf::RenderTarget& target)
 
 //----------------------------------------
 //
-//           Texture Selector
+//					HUD
 //
 //----------------------------------------
 
@@ -530,4 +530,101 @@ void gui::HUD::render(sf::RenderTarget& target)
 	target.draw(strength);
 	target.draw(defense);
 	target.draw(money);
+}
+
+//----------------------------------------
+//
+//					ShopMenu
+//
+//----------------------------------------
+
+bool gui::ShopMenu::getKeyTime()
+{
+	if (keyTime >= keyTimeMax)
+	{
+		keyTime = 0.f;
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+
+void gui::ShopMenu::updateKeyTime(const float& dt)
+{
+	if (keyTime < keyTimeMax)
+	{
+		keyTime += 10.f * dt;
+	}
+}
+
+void gui::ShopMenu::initShapes()
+{
+}
+
+void gui::ShopMenu::initButtons()
+{
+}
+
+void gui::ShopMenu::initText()
+{
+}
+
+void gui::ShopMenu::initTextures()
+{
+}
+
+gui::ShopMenu::ShopMenu()
+{
+	initShapes();
+	initTextures();
+	initText();
+	initButtons();
+
+}
+
+std::map<std::string, gui::Button*>& gui::ShopMenu::getButtons()
+{
+	return shopButtons;
+}
+
+void gui::ShopMenu::update(const sf::Vector2i& mousePosWindow, const float& dt)
+{
+	updateKeyTime(dt);
+	for (const auto& kv : shopButtons)
+	{
+		kv.second->update(mousePosWindow);
+	}
+}
+
+void gui::ShopMenu::render(sf::RenderTarget& target)
+{
+	renderShapes(target);
+	renderButtons(target);
+	renderText(target);
+}
+
+void gui::ShopMenu::renderShapes(sf::RenderTarget& target)
+{
+	for (const auto& kv : shopShapes)
+	{
+		target.draw(kv.second);
+	}
+}
+
+void gui::ShopMenu::renderButtons(sf::RenderTarget& target)
+{
+	for (const auto& kv : shopButtons)
+	{
+		kv.second->render(target);
+	}
+}
+
+void gui::ShopMenu::renderText(sf::RenderTarget& target)
+{
+	for (const auto& kv : shopText)
+	{
+		target.draw(kv.second);
+	}
 }

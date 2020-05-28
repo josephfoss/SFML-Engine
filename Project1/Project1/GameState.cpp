@@ -156,7 +156,11 @@ void GameState::updateButtons(const sf::Vector2f& mousePosView)
 					// check if the player is within a certain distance from the button using pythagorean theorum
 					if (sqrt(pow((i->getPosition().x - player->getPosition().x), 2) + pow((i->getPosition().y - player->getPosition().y), 2)) < 125)
 					{
-						// button id 6 loads dungeon 1
+						if (i->getID() == 1)
+						{
+
+						}
+						// button id 2 loads dungeon 1
 						if (i->getID() == 2)
 						{
 							loadNewMap("Data/tilemaps/dungeon1");
@@ -164,7 +168,7 @@ void GameState::updateButtons(const sf::Vector2f& mousePosView)
 							//after loading a new map the for loop has to break to stop it from trying to update a nullptr button.
 							break;
 						}
-						// button id 7 loads the shop
+						// button id 3 loads the shop
 						else if (i->getID() == 3)
 						{
 							loadNewMap("Data/tilemaps/shop");

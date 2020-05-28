@@ -136,5 +136,34 @@ namespace gui
 		void update(PlayerStats stats);
 		void render(sf::RenderTarget& target);
 	};
+	class ShopMenu
+	{
+		private:
+			std::map<std::string, sf::RectangleShape> shopShapes;
+			std::map<std::string, Button*> shopButtons;
+			std::map<std::string, sf::Text> shopText;
+			std::map<std::string, sf::Texture> shopTextures;
+			
+			bool hidden;
+			float keyTime;
+			float keyTimeMax;
+			bool getKeyTime();
+			void updateKeyTime(const float& dt);
+			void initShapes();
+			void initButtons();
+			void initText();
+			void initTextures();
+		public:
+			ShopMenu();
+
+			std::map<std::string, Button*>& getButtons();
+
+			void update(const sf::Vector2i& mousePosWindow, const float& dt);
+			void render(sf::RenderTarget& target);
+			void renderShapes(sf::RenderTarget& target);
+			void renderButtons(sf::RenderTarget& target);
+			void renderText(sf::RenderTarget& target);
+			
+	};
 }
 
