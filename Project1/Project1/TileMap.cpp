@@ -351,7 +351,7 @@ void TileMap::render(sf::RenderTarget& target, unsigned layer, Entity* entity)
 		{
 			for (int y = fromY; y < toY; y++)
 			{
-				if (y <= 50 && x <= 50)
+				if (y < 50 && x < 50)
 				{
 					if (map[x][y][layer])
 					{

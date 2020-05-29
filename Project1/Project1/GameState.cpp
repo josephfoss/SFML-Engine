@@ -10,6 +10,7 @@ GameState::GameState(StateData* stateData) : State(stateData)
 	initGUI();
 	initTileMap();
 	initPlayers();
+	initAudio();
 
 	camera.setSize(1500 / 1.4, 900 / 1.4);
 }
@@ -112,6 +113,15 @@ void GameState::initDeferredRender()
 	renderSprite.setTextureRect(sf::IntRect(0, 0, 1500, 900));
 }
 
+void GameState::initAudio()
+{
+	audio["shop_music"].openFromFile("Assets/Audio/shop.ogg");
+	audio["dungeon_music"].openFromFile("Assets/Audio/dungeon.ogg");
+
+	audio["shop_music"].setLoop(true);
+	audio["shop_music"].play();
+}
+
 void GameState::initPlayers()
 {
 	player = new Player(playerSpawn.x, playerSpawn.y, textures["PLAYER"]);
@@ -166,6 +176,11 @@ void GameState::updateButtons(const sf::Vector2f& mousePosView)
 						// button id 6 loads dungeon 1
 						if (i->getID() == 2)
 						{
+							audio["shop_music"].stop();
+
+							audio["dungeon_music"].setLoop(true);
+							audio["dungeon_music"].play();
+
 							loadNewMap("Data/tilemaps/dungeon1");
 							player->stats.currentHealth = player->stats.maxHealth;
 							//after loading a new map the for loop has to break to stop it from trying to update a nullptr button.
@@ -174,6 +189,11 @@ void GameState::updateButtons(const sf::Vector2f& mousePosView)
 						// button id 7 loads the shop
 						else if (i->getID() == 3)
 						{
+							audio["dungeon_music"].stop();
+
+							audio["shop_music"].setLoop(true);
+							audio["shop_music"].play();
+
 							loadNewMap("Data/tilemaps/shop");
 							player->stats.currentHealth = player->stats.maxHealth;
 							//after loading a new map the for loop has to break to stop it from trying to update a nullptr button.
@@ -230,6 +250,14 @@ void GameState::updatePauseMenuButtons()
 	//updates exit button in pause menu
 	if (pausemenu->getButtons()["EXIT"]->isPressed())
 	{
+		if (audio["shop_music"].getStatus() == sf::Music::Playing)
+		{
+			audio["shop_music"].stop();
+		}
+		if (audio["dungeon_music"].getStatus() == sf::Music::Playing)
+		{
+			audio["dungeon_music"].stop();
+		}
 		endState();
 	}
 }

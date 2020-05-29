@@ -11,8 +11,6 @@ private:
 	sf::RectangleShape background;
 	sf::Music ambiance;
 
-	gui::DropDownMenu* ddm;
-
 	std::map<std::string, sf::Texture*> textures;
 	std::map<std::string, gui::Button*> buttons;
 

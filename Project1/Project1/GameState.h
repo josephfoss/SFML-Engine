@@ -18,9 +18,11 @@ private:
 	sf::RenderTexture renderTexture;
 	sf::Sprite renderSprite;
 
+	std::map<std::string, sf::Music> audio;
 	sf::Vector2f playerSpawn;
 
 	void initDeferredRender();
+	void initAudio();
 	void initPlayers();
 	void initKeybinds();
 	void initTextures();
