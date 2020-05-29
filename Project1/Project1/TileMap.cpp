@@ -320,6 +320,7 @@ void TileMap::update()
 
 void TileMap::render(sf::RenderTarget& target, unsigned layer, Entity* entity)
 {
+	//If an entity is provided to the function, tiles will be culled in an (-10, 10) area around the entity, saving rendering power.
 	if (entity)
 	{
 		fromX = entity->getGridPosition(gridSizeU).x - 10;
@@ -359,13 +360,13 @@ void TileMap::render(sf::RenderTarget& target, unsigned layer, Entity* entity)
 						if (map[x][y][layer]->getCollision())
 						{
 							collisionBox.setPosition(map[x][y][layer]->getPosition());
-							target.draw(collisionBox);
 						}
 					}
 				}
 			}
 		}
 	}
+	//If there is no entity provided, like w
 	else
 	{
 		for (size_t x = 0; x < maxSize.x; x++)

@@ -195,7 +195,7 @@ void Player::updateAnimations(const float& dt)
 void Player::render(sf::RenderTarget& target)
 {
 	target.draw(sprite);
-	hitboxComponent->render(target);
+	//hitboxComponent->render(target);
 }
 
 void Player::update(const float& dt)
