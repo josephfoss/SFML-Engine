@@ -39,6 +39,7 @@ public:
 
 	int angleDirection;
 	bool attacking;
+	bool& setAttacking();
 
 	sf::Vector2f getVelocity();
 	sf::Vector2f getPositionInWorld();
@@ -46,6 +47,7 @@ public:
 	sf::Vector2f getPos();
 
 	void updateAngleDirection();
+
 
 	void resetOrigin();
 	void setOrigin(float x, float y);

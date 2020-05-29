@@ -146,7 +146,7 @@ namespace gui
 		std::map<std::string, sf::Texture> textures;
 		sf::Font font;
 
-		float x = 0, y = 0;
+		bool hidden;
 
 		void initButtons(sf::Font* font);
 		void initText(sf::Font* font);
@@ -156,6 +156,7 @@ namespace gui
 		ShopMenu(sf::Font* font);
 
 		std::map<std::string, gui::Button*>& getButtons();
+		bool& getHide();
 
 		void update(const float& dt, const sf::Vector2i& mousePosWindow, PlayerStats stats);
 		void render(sf::RenderTarget& target);

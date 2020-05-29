@@ -10,7 +10,7 @@ Player::Player(float x, float y, sf::Texture& spriteSheet)
 	initializeVariables();
 	initializeAnimations();
 
-	//setOrigin(sprite.getGlobalBounds().width / 2.f, sprite.getGlobalBounds().height / 2.f);
+	setOrigin(sprite.getGlobalBounds().width / 2.f, sprite.getGlobalBounds().height / 2.f);
 	setPosition(x, y);
 
 	loadPlayerStats("Data/player/save.dat");
@@ -33,6 +33,7 @@ void Player::initializeVariables()
 
 void Player::initializeAnimations()
 {
+	//creating animations from strips of the player sprite sheet.
 	animationComponent->addAnimation("IDLE_DOWN", 10.f, 0, 0, 15, 0, 99, 101, 0);
 	animationComponent->addAnimation("IDLE_DLEFT", 10.f, 0, 1, 15, 1, 99, 101, 0);
 	animationComponent->addAnimation("IDLE_LEFT", 10.f, 0, 2, 15, 2, 99, 101, 0);
@@ -102,6 +103,11 @@ void Player::setOrigin(float x, float y)
 	}
 }
 
+bool& Player::setAttacking()
+{
+	return attacking;
+}
+
 sf::Vector2f Player::getVelocity()
 {
 	return movementComponent->getVelocity();
@@ -153,10 +159,7 @@ std::string Player::getAnimationFromAngle(std::string type)
 
 void Player::updateInput()
 {
-	if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
-	{
-		attacking = true;
-	}
+
 }
 
 void Player::updateAnimations(const float& dt)

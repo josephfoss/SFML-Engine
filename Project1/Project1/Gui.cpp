@@ -519,6 +519,19 @@ void gui::HUD::render(sf::RenderTarget& target)
 
 void gui::ShopMenu::initButtons(sf::Font* font)
 {
+
+	buttons["b_exit"] =
+		new gui::Button(
+			//position              dimensions
+			sf::Vector2f(375, 110), sf::Vector2f(43, 40),
+			//font     text    size
+			font, "", 70,
+			//fontidle               fonthover                fontactive
+			sf::Color(232, 20, 5), sf::Color(232, 20, 5), sf::Color(232, 20, 5),
+			//idlecolor               hovercolor                activecolor
+			sf::Color(220, 220, 220), sf::Color(225, 225, 225), sf::Color(194, 0, 0)
+		);
+	buttons["b_exit"]->setTexture(&textures["EXITBUTTON"]);
 	buttons["b_strength"] = 
 		new gui::Button(
 			//position              dimensions
@@ -596,10 +609,12 @@ void gui::ShopMenu::initTextures()
 {
 	textures["BACKGROUND"].loadFromFile("Assets/Textures/UI/shop_bg.png");
 	textures["BUTTON"].loadFromFile("Assets/Textures/UI/shop_button.png");
+	textures["EXITBUTTON"].loadFromFile("Assets/Textures/UI/shop_exit.png");
 }
 
 gui::ShopMenu::ShopMenu(sf::Font* font)
 {
+	hidden = true;
 	initTextures();
 	initButtons(font);
 	initShapes();
@@ -611,37 +626,49 @@ std::map<std::string, gui::Button*>& gui::ShopMenu::getButtons()
 	return buttons;
 }
 
+bool& gui::ShopMenu::getHide()
+{
+	return hidden;
+}
+
 void gui::ShopMenu::update(const float& dt, const sf::Vector2i& mousePosWindow, PlayerStats stats)
 {
-	for (auto& i : buttons)
+	if (!hidden)
 	{
-		i.second->update(mousePosWindow);
+		for (auto& i : buttons)
+		{
+			i.second->update(mousePosWindow);
+		}
+
+		text["currentVitality"].setString(std::to_string(stats.maxHealth));
+		text["currentStrength"].setString(std::to_string(stats.strength));
+		text["currentDefense"].setString(std::to_string(stats.defense));
+
+		text["strCost"].setString(std::to_string((int)(stats.strength * 3) * 100));
+		text["defCost"].setString(std::to_string((int)(stats.defense * 3) * 100));
+		text["vitCost"].setString(std::to_string((int)(stats.maxHealth) * 3));
 	}
-
-	text["currentVitality"].setString(std::to_string(stats.maxHealth));
-	text["currentStrength"].setString(std::to_string(stats.strength));
-	text["currentDefense"].setString(std::to_string(stats.defense));
-
-	text["strCost"].setString(std::to_string((int)(stats.strength * 3) * 100));
-	text["defCost"].setString(std::to_string((int)(stats.defense * 3) * 100));
-	text["vitCost"].setString(std::to_string((int)(stats.maxHealth) * 3));
 }
+
 
 void gui::ShopMenu::render(sf::RenderTarget& target)
 {
-	for (auto& i : shapes)
+	if (!hidden)
 	{
-		target.draw(i.second);
-	}
-	for (auto& i : buttons)
-	{
-		if (i.second)
+		for (auto& i : shapes)
 		{
-			i.second->render(target);
+			target.draw(i.second);
 		}
-	}
-	for (auto& i : text)
-	{
-		target.draw(i.second);
+		for (auto& i : buttons)
+		{
+			if (i.second)
+			{
+				i.second->render(target);
+			}
+		}
+		for (auto& i : text)
+		{
+			target.draw(i.second);
+		}
 	}
 }

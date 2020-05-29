@@ -159,6 +159,10 @@ void GameState::updateButtons(const sf::Vector2f& mousePosView)
 					// check if the player is within a certain distance from the button using pythagorean theorum
 					if (sqrt(pow((i->getPosition().x - player->getPos().x), 2) + pow((i->getPosition().y - player->getPos().y), 2)) < 125)
 					{
+						if (i->getID() == 1)
+						{
+							shop->getHide() = false;
+						}
 						// button id 6 loads dungeon 1
 						if (i->getID() == 2)
 						{
@@ -177,10 +181,24 @@ void GameState::updateButtons(const sf::Vector2f& mousePosView)
 						}
 					}
 				}
+				//if the player gets out of range of the shop while the shop gui is open, close the shop
+				if (i->getID() == 1)
+				{
+					if (shop->getHide() == false)
+					{
+						if (sqrt(pow((i->getPosition().x - player->getPos().x), 2) + pow((i->getPosition().y - player->getPos().y), 2)) > 125)
+						{
+							shop->getHide() = true;
+						}
+					}	
+				}
 			}
 		}
 	}
-
+	if (shop->getButtons()["b_exit"]->isPressed() && getKeyTime())
+	{
+		shop->getHide() = true;
+	}
 	if (shop->getButtons()["b_strength"]->isPressed() && getKeyTime())
 	{
 		if (player->stats.currency >= (player->stats.strength * 3) * 100)
@@ -234,6 +252,12 @@ void GameState::updateInput(const float& dt)
 
 void GameState::updatePlayerInput(const float& dt)
 {
+
+	if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
+	{
+		player->setAttacking() = true;
+	}
+
 	//player movement
 	if (!player->attacking)
 	{
