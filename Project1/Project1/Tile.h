@@ -26,7 +26,9 @@ public:
 
 	const std::string getAsString() const;
 	static std::string getTileType(int i);
+	const sf::FloatRect getGlobalBounds() const;
 	const bool& getCollision() const;
+	const bool intersects(const sf::FloatRect bounds) const;
 	const sf::Vector2f& getPosition() const;
 
 	void update();

@@ -136,34 +136,30 @@ namespace gui
 		void update(PlayerStats stats);
 		void render(sf::RenderTarget& target);
 	};
+
 	class ShopMenu
 	{
-		private:
-			std::map<std::string, sf::RectangleShape> shopShapes;
-			std::map<std::string, Button*> shopButtons;
-			std::map<std::string, sf::Text> shopText;
-			std::map<std::string, sf::Texture> shopTextures;
-			
-			bool hidden;
-			float keyTime;
-			float keyTimeMax;
-			bool getKeyTime();
-			void updateKeyTime(const float& dt);
-			void initShapes();
-			void initButtons();
-			void initText();
-			void initTextures();
-		public:
-			ShopMenu();
+	private:
+		std::map<std::string, gui::Button*> buttons;
+		std::map<std::string, sf::Text> text;
+		std::map<std::string, sf::RectangleShape> shapes;
+		std::map<std::string, sf::Texture> textures;
+		sf::Font font;
 
-			std::map<std::string, Button*>& getButtons();
+		bool hidden;
 
-			void update(const sf::Vector2i& mousePosWindow, const float& dt);
-			void render(sf::RenderTarget& target);
-			void renderShapes(sf::RenderTarget& target);
-			void renderButtons(sf::RenderTarget& target);
-			void renderText(sf::RenderTarget& target);
-			
+		void initButtons(sf::Font* font);
+		void initText(sf::Font* font);
+		void initShapes();
+		void initTextures();
+	public:
+		ShopMenu(sf::Font* font);
+
+		std::map<std::string, gui::Button*>& getButtons();
+		bool& getHide();
+
+		void update(const float& dt, const sf::Vector2i& mousePosWindow, PlayerStats stats);
+		void render(sf::RenderTarget& target);
 	};
 }
 

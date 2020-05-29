@@ -1,0 +1,12 @@
+Editor Input:
+ - WASD to move
+ - Spacebar to hide the menu
+
+	- Tile Mode:
+		- C toggles tile collision
+		- F cycles the layers
+		- T cycles the types (currently useless)
+	- Prop Mode:
+		- C toggles if the prop is clickable
+		- T toggles if the prop is breakable (currently useless)
+		- + or - to cycle prop ids

@@ -10,7 +10,7 @@ gui::Button::Button(sf::Vector2f position, sf::Vector2f dimensions, sf::Font* fo
 	setTextSettings(text, font, fontsize, fontIdleColor);
 	setButtonColors(idleColor, hoverColor, activeColor);
 	setFontColors(fontIdleColor, fontHoverColor, fontActiveColor);
-	setOutlineColors(outlineIdleColor, outlineHoverColor, outlineActiveColor);
+	//setOutlineColors(outlineIdleColor, outlineHoverColor, outlineActiveColor);
 }
 
 gui::Button::~Button()
@@ -438,7 +438,7 @@ void gui::TextureSelector::render(sf::RenderTarget& target)
 
 //----------------------------------------
 //
-//					HUD
+//                 HUD
 //
 //----------------------------------------
 
@@ -496,27 +496,6 @@ void gui::HUD::update(PlayerStats stats)
 	strength.setString(std::to_string(stats.strength));
 	defense.setString(std::to_string(stats.defense));
 	money.setString(std::to_string(stats.currency));
-
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Right))
-	{
-		currency.move(1, 0);
-		money.move(1, 0);
-	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Left))
-	{
-		currency.move(-1, 0);
-		money.move(-1, 0);
-	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Up))
-	{
-		currency.move(0, -1);
-		money.move(0, -1);
-	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Down))
-	{
-		currency.move(0, 1);
-		money.move(0, 1);
-	}
 }
 
 void gui::HUD::render(sf::RenderTarget& target)
@@ -534,97 +513,162 @@ void gui::HUD::render(sf::RenderTarget& target)
 
 //----------------------------------------
 //
-//					ShopMenu
+//              Shop Menu
 //
 //----------------------------------------
 
-bool gui::ShopMenu::getKeyTime()
+void gui::ShopMenu::initButtons(sf::Font* font)
 {
-	if (keyTime >= keyTimeMax)
-	{
-		keyTime = 0.f;
-		return true;
-	}
-	else
-	{
-		return false;
-	}
+
+	buttons["b_exit"] =
+		new gui::Button(
+			//position              dimensions
+			sf::Vector2f(375, 110), sf::Vector2f(43, 40),
+			//font     text    size
+			font, "", 70,
+			//fontidle               fonthover                fontactive
+			sf::Color(232, 20, 5), sf::Color(232, 20, 5), sf::Color(232, 20, 5),
+			//idlecolor               hovercolor                activecolor
+			sf::Color(220, 220, 220), sf::Color(225, 225, 225), sf::Color(194, 0, 0)
+		);
+	buttons["b_exit"]->setTexture(&textures["EXITBUTTON"]);
+	buttons["b_strength"] = 
+		new gui::Button(
+			//position              dimensions
+			sf::Vector2f(579, 254), sf::Vector2f(320, 100),
+			//font     text    size
+			font, "Strength", 70,
+			//fontidle               fonthover                fontactive
+			sf::Color(232, 20, 5), sf::Color(232, 20, 5), sf::Color(232, 20, 5),
+			//idlecolor               hovercolor                activecolor
+			sf::Color(200, 185, 185), sf::Color(220, 220, 220), sf::Color(194, 0, 0)
+		);
+	buttons["b_strength"]->setTexture(&textures["BUTTON"]);
+	buttons["b_defense"] =
+		new gui::Button(
+			//position              dimensions
+			sf::Vector2f(579, 400), sf::Vector2f(320, 100),
+			//font     text    size
+			font, "Defense", 70,
+			//fontidle               fonthover                fontactive
+			sf::Color(232, 20, 5), sf::Color(232, 20, 5), sf::Color(232, 20, 5),
+			//idlecolor               hovercolor                activecolor
+			sf::Color(200, 185, 185), sf::Color(220, 220, 220), sf::Color(194, 0, 0)
+		);
+	buttons["b_defense"]->setTexture(&textures["BUTTON"]);
+	buttons["b_vitality"] =
+		new gui::Button(
+			//position              dimensions
+			sf::Vector2f(579, 546), sf::Vector2f(320, 100),
+			//font     text    size
+			font, "Vitality", 70,
+			//fontidle               fonthover                fontactive
+			sf::Color(232, 20, 5), sf::Color(232, 20, 5), sf::Color(232, 20, 5),
+			//idlecolor               hovercolor                activecolor
+			sf::Color(200, 185, 185), sf::Color(220, 220, 220), sf::Color(194, 0, 0)
+		);
+	buttons["b_vitality"]->setTexture(&textures["BUTTON"]);
 }
 
-void gui::ShopMenu::updateKeyTime(const float& dt)
+void gui::ShopMenu::initText(sf::Font* font)
 {
-	if (keyTime < keyTimeMax)
-	{
-		keyTime += 10.f * dt;
-	}
+	text["currentStrength"].setFont(*font);
+	text["currentStrength"].setPosition(sf::Vector2f(502, 282));
+	text["currentStrength"].setCharacterSize(35);
+
+	text["currentDefense"].setFont(*font);
+	text["currentDefense"].setPosition(sf::Vector2f(502, 429));
+	text["currentDefense"].setCharacterSize(35);
+
+	text["currentVitality"].setFont(*font);
+	text["currentVitality"].setPosition(sf::Vector2f(490, 572));
+	text["currentVitality"].setCharacterSize(35);
+
+	text["strCost"].setFont(*font);
+	text["strCost"].setPosition(sf::Vector2f(930, 282));
+	text["strCost"].setCharacterSize(35);
+
+	text["defCost"].setFont(*font);
+	text["defCost"].setPosition(sf::Vector2f(930, 429));
+	text["defCost"].setCharacterSize(35);
+
+	text["vitCost"].setFont(*font);
+	text["vitCost"].setPosition(sf::Vector2f(930, 572));
+	text["vitCost"].setCharacterSize(35);
 }
 
 void gui::ShopMenu::initShapes()
 {
-}
-
-void gui::ShopMenu::initButtons()
-{
-}
-
-void gui::ShopMenu::initText()
-{
+	//background
+	shapes["bg_shape"].setSize(sf::Vector2f(1032, 845));
+	shapes["bg_shape"].setTexture(&textures["BACKGROUND"]);
+	shapes["bg_shape"].setPosition(234, 0);
 }
 
 void gui::ShopMenu::initTextures()
 {
+	textures["BACKGROUND"].loadFromFile("Assets/Textures/UI/shop_bg.png");
+	textures["BUTTON"].loadFromFile("Assets/Textures/UI/shop_button.png");
+	textures["EXITBUTTON"].loadFromFile("Assets/Textures/UI/shop_exit.png");
 }
 
-gui::ShopMenu::ShopMenu()
+gui::ShopMenu::ShopMenu(sf::Font* font)
 {
-	initShapes();
+	hidden = true;
 	initTextures();
-	initText();
-	initButtons();
-
+	initButtons(font);
+	initShapes();
+	initText(font);
 }
 
 std::map<std::string, gui::Button*>& gui::ShopMenu::getButtons()
 {
-	return shopButtons;
+	return buttons;
 }
 
-void gui::ShopMenu::update(const sf::Vector2i& mousePosWindow, const float& dt)
+bool& gui::ShopMenu::getHide()
 {
-	updateKeyTime(dt);
-	for (const auto& kv : shopButtons)
+	return hidden;
+}
+
+void gui::ShopMenu::update(const float& dt, const sf::Vector2i& mousePosWindow, PlayerStats stats)
+{
+	if (!hidden)
 	{
-		kv.second->update(mousePosWindow);
+		for (auto& i : buttons)
+		{
+			i.second->update(mousePosWindow);
+		}
+
+		text["currentVitality"].setString(std::to_string(stats.maxHealth));
+		text["currentStrength"].setString(std::to_string(stats.strength));
+		text["currentDefense"].setString(std::to_string(stats.defense));
+
+		text["strCost"].setString(std::to_string((int)(stats.strength * 3) * 100));
+		text["defCost"].setString(std::to_string((int)(stats.defense * 3) * 100));
+		text["vitCost"].setString(std::to_string((int)(stats.maxHealth) * 3));
 	}
 }
+
 
 void gui::ShopMenu::render(sf::RenderTarget& target)
 {
-	renderShapes(target);
-	renderButtons(target);
-	renderText(target);
-}
-
-void gui::ShopMenu::renderShapes(sf::RenderTarget& target)
-{
-	for (const auto& kv : shopShapes)
+	if (!hidden)
 	{
-		target.draw(kv.second);
-	}
-}
-
-void gui::ShopMenu::renderButtons(sf::RenderTarget& target)
-{
-	for (const auto& kv : shopButtons)
-	{
-		kv.second->render(target);
-	}
-}
-
-void gui::ShopMenu::renderText(sf::RenderTarget& target)
-{
-	for (const auto& kv : shopText)
-	{
-		target.draw(kv.second);
+		for (auto& i : shapes)
+		{
+			target.draw(i.second);
+		}
+		for (auto& i : buttons)
+		{
+			if (i.second)
+			{
+				i.second->render(target);
+			}
+		}
+		for (auto& i : text)
+		{
+			target.draw(i.second);
+		}
 	}
 }

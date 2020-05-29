@@ -12,14 +12,17 @@ private:
 	TileMap* tileMap;
 	PropMap* propMap;
 	PauseMenu* pausemenu;
+	gui::ShopMenu* shop;
 	gui::HUD* hud;
 	sf::View camera;
 	sf::RenderTexture renderTexture;
 	sf::Sprite renderSprite;
 
+	std::map<std::string, sf::Music> audio;
 	sf::Vector2f playerSpawn;
 
 	void initDeferredRender();
+	void initAudio();
 	void initPlayers();
 	void initKeybinds();
 	void initTextures();
@@ -36,6 +39,7 @@ public:
 	void updatePauseMenuButtons();
 	void updateInput(const float& dt);
 	void updatePlayerInput(const float& dt);
+	void updateTileMap(const float& dt);
 	void update(const float& dt);
 	void render(sf::RenderTarget* target = nullptr);
 };

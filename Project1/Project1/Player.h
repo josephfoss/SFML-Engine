@@ -39,19 +39,23 @@ public:
 
 	int angleDirection;
 	bool attacking;
+	bool& setAttacking();
 
 	sf::Vector2f getVelocity();
 	sf::Vector2f getPositionInWorld();
 	std::string getAnimationFromAngle(std::string);
-	sf::Vector2f getPosition();
+	sf::Vector2f getPos();
 
 	void updateAngleDirection();
+
 
 	void resetOrigin();
 	void setOrigin(float x, float y);
 
 	void updateInput();
 	void updateAnimations(const float& dt);
+
+	virtual void render(sf::RenderTarget& target);
 	virtual void update(const float& dt);
 };
 

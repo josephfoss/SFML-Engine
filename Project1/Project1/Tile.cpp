@@ -39,9 +39,19 @@ std::string Tile::getTileType(int i)
 	return tileTypes[i];
 }
 
+const sf::FloatRect Tile::getGlobalBounds() const
+{
+	return shape.getGlobalBounds();
+}
+
 const bool& Tile::getCollision() const
 {
 	return collision;
+}
+
+const bool Tile::intersects(const sf::FloatRect bounds) const
+{
+	return shape.getGlobalBounds().intersects(bounds);
 }
 
 const sf::Vector2f& Tile::getPosition() const

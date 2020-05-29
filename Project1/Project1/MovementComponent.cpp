@@ -25,6 +25,22 @@ sf::Vector2f MovementComponent::getPosInWorld()
 	return positionInWorld;
 }
 
+void MovementComponent::stopVelocity()
+{
+	velocity.x = 0.f;
+	velocity.y = 0.f;
+}
+
+void MovementComponent::stopVelocityX()
+{
+	velocity.x = 0.f;
+}
+
+void MovementComponent::stopVelocityY()
+{
+	velocity.y = 0.f;
+}
+
 void MovementComponent::move(const float x, const float y, const float& dt)
 {
 	velocity.x += acceleration * x;

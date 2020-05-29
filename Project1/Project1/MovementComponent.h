@@ -19,6 +19,11 @@ public:
 	const sf::Vector2f& getVelocity() const;
 	sf::Vector2f getPosInWorld();
 
+	void stopVelocity();
+
+	void stopVelocityX();
+	void stopVelocityY();
+
 	void move(const float x, const float y, const float& dt);
 	void update(const float& dt);
 

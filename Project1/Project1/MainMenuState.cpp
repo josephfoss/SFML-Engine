@@ -27,8 +27,6 @@ MainMenuState::~MainMenuState()
 	{
 		delete j->second;
 	}
-
-	delete ddm;
 }
 
 void MainMenuState::initVariables()
@@ -160,10 +158,6 @@ void MainMenuState::initButtons()
 	//centering Settings button.
 	buttons["EDITOR_BUTTON"]->setPosition(sf::Vector2f(
 		1359, 675));
-
-	std::string li[] = {"First", "Second", "Third", "Fourth"};
-	ddm = new gui::DropDownMenu(100, 100, 200, 50, fontMain, li, 4, 0);
-
 }
 
 void MainMenuState::initAudio()
@@ -228,8 +222,6 @@ void MainMenuState::update(const float& dt)
 	updateMousePositions();
 	updateInput(dt);
 	updateButtons();
-
-	ddm->update(mousePosWindow, dt);
 }
 
 void MainMenuState::render(sf::RenderTarget* target)
@@ -239,6 +231,5 @@ void MainMenuState::render(sf::RenderTarget* target)
 
 	target->draw(background);
 	target->draw(logo);
-	ddm->render(*target);
 	renderButtons(*target);
 }
